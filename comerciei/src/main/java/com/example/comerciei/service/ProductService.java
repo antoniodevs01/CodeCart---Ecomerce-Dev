@@ -38,4 +38,11 @@ public class ProductService {
         
         return productRepository.save(product);
     }
+
+    // Regra 4: Apagar um produto pelo ID
+    public void deleteProduct(UUID id) {
+        // O método findProductById já verifica se existe e lança o erro caso não encontre
+        Product product = findProductById(id);
+        productRepository.delete(product);
+    }
 }
