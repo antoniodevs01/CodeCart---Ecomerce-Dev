@@ -1,0 +1,21 @@
+meta {
+  name: Cadastrar Produto
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8080/api/products
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "CLP Siemens S7-1200",
+    "description": "Controlador Lógico Programável com 14 entradas digitais e 10 saídas a relé.",
+    "price": 2450.50,
+    "stockQuantity": 8
+  }
+  
+}
