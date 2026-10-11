@@ -28,10 +28,20 @@ public class SecurityConfigurations {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/auth/login").permitAll()
-                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/auth/register").permitAll()
-                        .anyRequest().authenticated()
-                )
+        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/auth/login").permitAll()
+        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/auth/register").permitAll()
+        
+        // Cumprindo a regra: Qualquer pessoa (mesmo sem login) pode VER o catálogo
+        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/products").permitAll()
+        
+        // Cumprindo a regra: Apenas ADMIN pode CRIAR, ATUALIZAR ou APAGAR produtos
+        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/products").hasRole("ADMIN")
+        .requestMatchers(org.springframework.http.HttpMethod.PUT, "/api/products/**").hasRole("ADMIN")
+        .requestMatchers(org.springframework.http.HttpMethod.DELETE, "/api/products/**").hasRole("ADMIN")
+        
+        // Qualquer outra rota exige utilizador logado
+        .anyRequest().authenticated()
+)
                 // ADICIONAMOS O NOSSO FILTRO AQUI:
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
