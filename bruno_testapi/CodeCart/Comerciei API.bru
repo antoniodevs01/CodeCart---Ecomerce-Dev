@@ -4,13 +4,23 @@ meta {
   seq: 3
 }
 
-get {
+delete {
   url: http://localhost:8080/api/products/ce70ed27-649e-4c90-b691-fb10798caaf1
   body: none
   auth: inherit
 }
 
+body:json {
+  {
+    "name": "CLP Siemens S7-1200 Atualizado",
+    "description": "Controlador Lógico Programável",
+    "price": 2500.00,
+    "stockQuantity": 20
+  }
+}
+
 settings {
   encodeUrl: true
+  timeout: 0
   forwardAuthorizationHeader: false
 }

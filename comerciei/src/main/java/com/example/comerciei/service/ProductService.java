@@ -3,6 +3,8 @@ package com.example.comerciei.service;
 import com.example.comerciei.domain.Product;
 import com.example.comerciei.repository.ProductRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,8 +20,8 @@ public class ProductService {
     }
 
     // Regra 1: Listar todos os produtos disponíveis
-    public List<Product> findAllProducts() {
-        return productRepository.findAll();
+    public Page<Product> findAllProducts(Pageable pageable) {
+    return productRepository.findAll(pageable);
     }
 
     // Regra 2: Buscar um produto específico

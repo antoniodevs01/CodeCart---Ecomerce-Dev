@@ -5,6 +5,8 @@ import com.example.comerciei.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,9 +24,9 @@ public class ProductController {
     // Método GET para listar todos os produtos
     // URL: GET http://localhost:8080/api/products
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> products = productService.findAllProducts();
-        return ResponseEntity.ok(products); // Retorna Status 200 (OK) com a lista
+    public ResponseEntity<Page<Product>> getAllProducts(Pageable pageable) {
+        Page<Product> products = productService.findAllProducts(pageable);
+            return ResponseEntity.ok(products);
     }
 
     // Método GET para buscar um produto específico pelo ID
