@@ -12,6 +12,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class Product {
 
     @Id
@@ -33,8 +34,20 @@ public class Product {
     @Column(name = "created_at", insertable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @ManyToOne // Muitos Produtos para Uma Categoria
+    @JoinColumn(name = "category_id") // Nome da coluna da chave estrangeira no banco de dados
+        private Category category;
+
     // Método explícito para a IDE parar de acusar erro no Service
     public BigDecimal getPrice() {
         return this.price;
+    }
+
+    public Category getCategory() {
+    return category;
+    }
+
+    public void setCategory(Category category) {
+    this.category = category;
     }
 }
