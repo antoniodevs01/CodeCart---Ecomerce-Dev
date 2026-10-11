@@ -1,0 +1,16 @@
+meta {
+  name: POST
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8080/api/categories
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  forwardAuthorizationHeader: false
+}

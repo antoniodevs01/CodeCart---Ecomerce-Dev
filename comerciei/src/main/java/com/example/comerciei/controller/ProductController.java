@@ -79,4 +79,12 @@ public class ProductController {
         productService.deleteProduct(id); // Garanta que este método existe no seu ProductService
         return ResponseEntity.noContent().build(); // Retorna Status 204 (No Content)
     }
+
+    // Método GET para buscar produtos de uma categoria específica
+// URL: GET http://localhost:8080/api/products/category/{categoryId}
+    @GetMapping("/category/{categoryId}")
+        public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable("categoryId") UUID categoryId) {
+            List<Product> products = productService.findProductsByCategory(categoryId);
+                return ResponseEntity.ok(products);
+    }
 }

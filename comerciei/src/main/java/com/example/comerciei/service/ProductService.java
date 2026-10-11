@@ -45,4 +45,8 @@ public class ProductService {
         Product product = findProductById(id);
         productRepository.delete(product);
     }
+
+    public List<Product> findProductsByCategory(UUID categoryId) {
+        return productRepository.findByCategoryId(categoryId);
+    }
 }
