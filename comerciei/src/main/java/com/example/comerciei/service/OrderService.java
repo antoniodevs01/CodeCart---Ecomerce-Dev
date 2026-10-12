@@ -19,10 +19,12 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
+    private final EmailService emailService;
 
-    public OrderService(OrderRepository orderRepository, ProductRepository productRepository) {
+    public OrderService(OrderRepository orderRepository, ProductRepository productRepository, EmailService emailService) {
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
+        this.emailService = emailService;
     }
 
     // @Transactional garante que, se faltar stock a meio da compra, 
@@ -62,20 +64,30 @@ public class OrderService {
             totalAmount = totalAmount.add(subtotal);
         }
 
-        // Estas duas linhas voltam para aqui (fecham o checkout)
         order.setTotalAmount(totalAmount);
         return orderRepository.save(order);
     } // <-- FIM DO MÉTODO CHECKOUT
 
-    // NOVO MÉTODO (Separado e isolado)
+    @Transactional
     public void markOrderAsPaid(UUID orderId) {
         Order order = orderRepository.findById(orderId)
             .orElseThrow(() -> new RuntimeException("Pedido não encontrado: " + orderId));
         
         order.setStatus("PAID"); 
-        
         orderRepository.save(order);
+        
         System.out.println("SUCESSO: Pedido " + orderId + " atualizado para PAGO!");
+
+        // Disparo do e-mail de confirmação ao cliente
+        try {
+            String clientEmail = order.getUser().getEmail();
+            Double totalAmount = order.getTotalAmount() != null ? order.getTotalAmount().doubleValue() : 0.0;
+
+            emailService.sendOrderConfirmationEmail(clientEmail, orderId, totalAmount);
+            System.out.println("E-mail de confirmação disparado com sucesso para: " + clientEmail);
+        } catch (Exception e) {
+            System.out.println("Erro ao enviar e-mail de confirmação: " + e.getMessage());
+        }
     } // <-- FIM DO MÉTODO MARK ORDER AS PAID
 
 }
