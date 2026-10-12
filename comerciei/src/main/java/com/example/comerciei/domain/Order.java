@@ -1,13 +1,19 @@
 package com.example.comerciei.domain;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "orders") // "orders" no plural porque "order" é uma palavra reservada no SQL
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,20 +24,22 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    // Relacionamento: Muitos Pedidos podem pertencer a Um Usuário
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(nullable = false, length = 50)
-    private String status; // Ex: PENDING, PAID, CANCELED
+    // Um pedido tem vários itens. Se apagarmos o pedido, os itens apagam-se em cascata.
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> items = new ArrayList<>();
 
-    @Column(name = "total_amount", nullable = false, precision = 10, scale = 2)
     private BigDecimal totalAmount;
 
-    @Column(name = "stripe_payment_id")
-    private String stripePaymentId;
+    private String status; // Ex: PENDING, PAID, CANCELLED
 
-    @Column(name = "created_at", insertable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 }

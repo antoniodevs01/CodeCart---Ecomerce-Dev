@@ -38,6 +38,9 @@ public class SecurityConfigurations {
         .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/products").hasRole("ADMIN")
         .requestMatchers(org.springframework.http.HttpMethod.PUT, "/api/products/**").hasRole("ADMIN")
         .requestMatchers(org.springframework.http.HttpMethod.DELETE, "/api/products/**").hasRole("ADMIN")
+
+        // Permitir que o Spring mostre a mensagem real do erro
+        .requestMatchers("/error").permitAll() 
         
         // Qualquer outra rota exige utilizador logado
         .anyRequest().authenticated()

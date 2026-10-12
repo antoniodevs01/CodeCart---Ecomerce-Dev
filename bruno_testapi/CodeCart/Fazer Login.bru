@@ -1,0 +1,24 @@
+meta {
+  name: Fazer Login
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/api/auth/login
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email": "milene.email@gmail.com",
+    "password": "senha-segura"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

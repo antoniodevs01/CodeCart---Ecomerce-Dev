@@ -1,0 +1,32 @@
+meta {
+  name: Finalizar Compra CHECKOUT
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8080/api/orders
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjb21lcmNpZWktYXBpIiwic3ViIjoibWlsZW5lLmVtYWlsQGdtYWlsLmNvbSIsImV4cCI6MTc5MTc3MDYyN30.hboZ_9kVonk36HinDRIwcpwSSWcQnr8BsOE95cZ3a90
+}
+
+body:json {
+  {
+    "items": [
+      {
+        "productId": "155f1c2c-f645-4041-8997-13a383b12bef",
+        "quantity": 2
+      }
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

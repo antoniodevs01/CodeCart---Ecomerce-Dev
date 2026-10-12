@@ -1,0 +1,30 @@
+meta {
+  name: Cadastrar Produto
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/api/products
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjb21lcmNpZWktYXBpIiwic3ViIjoibWlsZW5lLmVtYWlsQGdtYWlsLmNvbSIsImV4cCI6MTc5MTc1Njc5N30.5TAE-4bKWKWaz9H21R-e3xxkwgCPLGVsG8vgpi6ypZ4
+}
+
+body:json {
+  {
+    "name": "Lâmpada Smart Zigbee",
+    "description": "Lâmpada LED inteligente",
+    "price": 89.90,
+    "stockQuantity": 15
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

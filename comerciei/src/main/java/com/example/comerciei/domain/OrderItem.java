@@ -1,7 +1,11 @@
 package com.example.comerciei.domain;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.util.UUID;
 
@@ -17,20 +21,15 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    // Relacionamento: Muitos Itens pertencem a Um Pedido
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
-    // Relacionamento: Muitos Itens podem referenciar o mesmo Produto
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @Column(nullable = false)
     private Integer quantity;
 
-    // Congela o preço no momento da compra
-    @Column(name = "price_at_purchase", nullable = false, precision = 10, scale = 2)
-    private BigDecimal priceAtPurchase;
+    private BigDecimal price; // Guardamos o preço no momento da compra
 }

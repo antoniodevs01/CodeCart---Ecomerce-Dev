@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "tb_user") // Mantemos tb_user para evitar conflitos no PostgreSQL
+@Table(name = "users") 
 @Getter
 @Setter
 @NoArgsConstructor

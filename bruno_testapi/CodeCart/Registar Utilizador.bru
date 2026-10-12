@@ -1,0 +1,26 @@
+meta {
+  name: Registar Utilizador
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8080/api/auth/register
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Milene Talia",
+    "email": "milene.email@gmail.com",
+    "password": "senha-segura",
+    "role": "ADMIN"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}
