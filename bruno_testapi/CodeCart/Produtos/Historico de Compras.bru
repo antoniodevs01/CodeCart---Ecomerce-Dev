@@ -5,12 +5,17 @@ meta {
 }
 
 get {
-  url: URL: http://localhost:8080/api/orders
+  url: http://localhost:8080/api/orders
   body: none
-  auth: inherit
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjb21lcmNpZWktYXBpIiwic3ViIjoibWlsZW5lLmVtYWlsQGdtYWlsLmNvbSIsImV4cCI6MTc5MTc3MDYyN30.hboZ_9kVonk36HinDRIwcpwSSWcQnr8BsOE95cZ3a90
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
   forwardAuthorizationHeader: false
 }

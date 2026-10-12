@@ -30,6 +30,7 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
         .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/auth/login").permitAll()
         .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/auth/register").permitAll()
+        .requestMatchers("/api/webhooks/**").permitAll()
         
         // Cumprindo a regra: Qualquer pessoa (mesmo sem login) pode VER o catálogo
         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/products").permitAll()

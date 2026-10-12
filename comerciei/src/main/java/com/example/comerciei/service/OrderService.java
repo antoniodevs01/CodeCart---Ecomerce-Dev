@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Service
 public class OrderService {
@@ -61,7 +62,20 @@ public class OrderService {
             totalAmount = totalAmount.add(subtotal);
         }
 
+        // Estas duas linhas voltam para aqui (fecham o checkout)
         order.setTotalAmount(totalAmount);
         return orderRepository.save(order);
-    }
+    } // <-- FIM DO MÉTODO CHECKOUT
+
+    // NOVO MÉTODO (Separado e isolado)
+    public void markOrderAsPaid(UUID orderId) {
+        Order order = orderRepository.findById(orderId)
+            .orElseThrow(() -> new RuntimeException("Pedido não encontrado: " + orderId));
+        
+        order.setStatus("PAID"); 
+        
+        orderRepository.save(order);
+        System.out.println("SUCESSO: Pedido " + orderId + " atualizado para PAGO!");
+    } // <-- FIM DO MÉTODO MARK ORDER AS PAID
+
 }
